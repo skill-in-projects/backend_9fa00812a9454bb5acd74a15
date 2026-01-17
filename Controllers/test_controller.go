@@ -26,10 +26,16 @@ func (tc *TestController) setSearchPath() error {
 }
 
 func (tc *TestController) GetAll(w http.ResponseWriter, r *http.Request) {
+    // This will cause a runtime error (division by zero)
+    result := 1 / 0  // This will raise a panic
+    
     if err := tc.setSearchPath(); err != nil {
         http.Error(w, "Database error: "+err.Error(), http.StatusInternalServerError)
         return
     }
+    
+    // ... rest of the code
+
     
     rows, err := tc.DB.Query(`SELECT "Id", "Name" FROM "TestProjects" ORDER BY "Id"`)
     if err != nil {
