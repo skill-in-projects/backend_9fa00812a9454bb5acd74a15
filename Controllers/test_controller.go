@@ -26,8 +26,9 @@ func (tc *TestController) setSearchPath() error {
 }
 
 func (tc *TestController) GetAll(w http.ResponseWriter, r *http.Request) {
-    // This will cause a runtime error (division by zero)
-    result := 1 / 0  // This will raise a panic
+    // This will cause a runtime panic (nil pointer dereference)
+    var nilSlice []int
+    _ = nilSlice[0]  // Panic: runtime error: index out of range
     
     if err := tc.setSearchPath(); err != nil {
         http.Error(w, "Database error: "+err.Error(), http.StatusInternalServerError)
